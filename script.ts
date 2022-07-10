@@ -2,13 +2,19 @@ interface Veiculo {
     nome: string;
     placa: string;
     entrada: Date | string;
+    clientId?: string;
 }
-interface Encerrar {
+
+interface Pessoa {
     nome: string;
-    placa: string;
-    tempo: number;
-  }
-  
+    cpf: string
+}
+
+interface Cliente extends Pessoa{
+    Veiculos: Veiculo[]
+}
+
+
 
 (function () {
     const $ = (query: string): HTMLInputElement | null => document.querySelector(query);
@@ -43,7 +49,7 @@ interface Encerrar {
             `;
 
             row.querySelector(".delete")?.addEventListener("click", function (){
-                remover (this.dataset.placa)
+                remover(this.dataset.placa)
             })
 
             $("#patio")?.appendChild(row);
@@ -56,8 +62,12 @@ interface Encerrar {
             
             const tempo = calcTempo(new Date().getTime() - new Date(entrada).getTime());
 
-            if(confirm (`O veiculo ${nome} permaneceu por ${tempo}. Deseja encerrar?`)) return;
+            if(!confirm(`O veiculo ${nome} permaneceu por ${tempo}. Deseja encerrar?`)
+            ) 
+            return;
+
             salvar(ler().filter((veiculo) => veiculo.placa !== placa));
+            
             render()
         }
 

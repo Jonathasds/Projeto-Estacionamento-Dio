@@ -34,7 +34,7 @@
         function remover(placa) {
             const { entrada, nome } = ler().find((veiculo) => veiculo.placa === placa);
             const tempo = calcTempo(new Date().getTime() - new Date(entrada).getTime());
-            if (confirm(`O veiculo ${nome} permaneceu por ${tempo}. Deseja encerrar?`))
+            if (!confirm(`O veiculo ${nome} permaneceu por ${tempo}. Deseja encerrar?`))
                 return;
             salvar(ler().filter((veiculo) => veiculo.placa !== placa));
             render();
